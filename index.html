@@ -33,9 +33,9 @@
                     <div class="d-flex justify-content-center align-items-center p-3">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 calc-display">
-                                <div  id="number_div" class="inputString">0</div>
+                                <div id="number_div" class="inputString">0</div>
                                 <div id="expression" class="expressionString"></div>
-                                <div  id="value_div" class="valueString"></div>
+                                <div id="value_div" class="valueString"></div>
                             </div>
                             <input type="hidden" id="savedExpression">
                         </div>
@@ -44,13 +44,15 @@
                     <div class="d-flex justify-content-center  align-items-center p-3 ">
                         <div class="row">
                             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <button type="button" class="btn btn-light calc-btn" data-event_key="NumLock"><small>Num Lock</small></button>
+                                <button type="button" class="btn btn-light calc-btn" data-event_key="NumLock"><small>Num
+                                        Lock</small></button>
                             </div>
                             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                 <button type="button" class="btn btn-light calc-btn" data-event_key="Delete">CE</button>
                             </div>
                             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                                <button type="button" class="btn btn-light calc-btn" data-event_key="Delete">DEL</button>
+                                <button type="button" class="btn btn-light calc-btn"
+                                    data-event_key="Delete">DEL</button>
                             </div>
                             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                 <button type="button" class="btn btn-light calc-btn" data-event_key="/">/</button>
@@ -108,7 +110,8 @@
                     <div class="d-flex justify-content-center align-items-center p-3">
                         <div class="row">
                             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <button type="button" class="btn btn-light calc-btn" style="width: 150px;" data-event_key="0">0</button>
+                                <button type="button" class="btn btn-light calc-btn" style="width: 150px;"
+                                    data-event_key="0">0</button>
                             </div>
                             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                 <button type="button" class="btn btn-light calc-btn" data-event_key=".">.</button>
@@ -134,39 +137,45 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <script>
-     $(document).on('keypress', function(e){
-        $('button[data-event_key = "'+ e.key +'"]').addClass('active')
-        if((e.keyCode>=48 && e.keyCode<=57) || (e.keyCode>=96 && e.keyCode<=105)){
-            appendNumber(e.key)
+        $(document).on('keypress', function (e) {
+            $('button[data-event_key = "' + e.key + '"]').addClass('active')
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+                appendNumber(e.key)
+            }
+            console.log(e.key)
+        })
+
+        $(document).on('keyup', function (e) {
+            $('button[data-event_key = "' + e.key + '"]').removeClass('active')
+
+            console.log(e.key)
+        })
+
+        $('.calc-btn').on('click', function(e) {
+            var key = $(this).data('event_key')
+            if(key != '+' && key != '-' && key != '=' && key != '.' && key != '*' && key != '/' && key != 'Delete' && key != 'NumLock') {
+                appendNumber(key)
+            }
+           
+            console.log(key)
+        })
+
+        function appendNumber(number) {
+            var existingNumber = $("#number_div").html();
+            var currentString = number;
+            var outputString = '';
+            if (existingNumber != '' && existingNumber != undefined && existingNumber != null) {
+                if (existingNumber == 0) {
+                    outputString = number
+                } else {
+                    outputString= existingNumber+=currentString;
+                }
+            }
+            else {
+              outputString = existingNumber;    
+            }
+            $("#number_div").html(outputString);
         }
-        console.log(e.key)
-     })
-
-     $(document).on('keyup', function(e){
-        $('button[data-event_key = "'+ e.key +'"]').removeClass('active')
-       
-        console.log(e.key)
-     })
-
-     $('.calc-btn').on('click',function(e){
-        if(key != '+' && key != '-' && key != '=' && key != '.' && key != '*' && key != '/' && key != 'Delete' && key != 'NumLock' ) {
-            appendNumber(e.key)
-        }
-        var key = $(this).data('event_key')
-        console.log(key)
-     })
-
-     function appendNumber(number){
-       var existingNumber = $("#number_div").html();
-       var currentString = number;
-       var outputString = '';
-       if(existingNumber==0){
-        outputString = number
-       }else{
-         outputString = existingNumber += currentString;
-       }
-       $("#number_div").html(outputString);
-     }
     </script>
 </body>
 
